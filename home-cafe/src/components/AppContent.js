@@ -1,3 +1,18 @@
+import { MenuHeader, MenuItemContainer } from "./MenuComponents.js";
+import { Box } from "@mui/material";
+import theme from "../theme";
+
 export const AppContent = () => {
-    return <div>Welcome to home cafe app!</div>
-}
+  return (
+    <Box
+      sx={{
+        padding: 4,
+        backgroundColor: theme.palette.background.default,
+        minHeight: "100vh",
+      }}
+    >
+      <MenuHeader />
+      <MenuItemContainer />
+    </Box>
+  );
+};
