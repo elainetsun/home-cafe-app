@@ -8,7 +8,7 @@ const cards = [
   {
     emoji: "☕",
     title: "Cafe latte",
-    desc: "$Espresso, milk",
+    desc: "Espresso, milk",
   },
   {
     emoji: "🍵",
