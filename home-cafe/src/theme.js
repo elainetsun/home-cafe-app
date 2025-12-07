@@ -32,6 +32,11 @@ const theme = createTheme({
       fontSize: "1.8rem",
       color: "#574243",
     },
+    h2: {
+      fontSize: "1.25rem",
+      fontWeight: 600,
+      color: "#574243",
+    },
     subtitle1: {
       fontFamily: `"Kalam", cursive`,
       fontSize: "0.9rem",
