@@ -1,16 +1,16 @@
-import { AppContent } from "./components/AppContent";
-import { AppHeader } from "./components/AppHeader";
-import { ThemeProvider, CssBaseline } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
+import { Box } from "@mui/material";
 import theme from "./theme";
+import { MenuPage } from "./components/MenuPage";
+import { AppHeader } from "./components/AppHeader";
 
-function App() {
+export default function App() {
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <AppHeader />
-      <AppContent />
+      <Box sx={{ p: 2 }}>
+        <AppHeader />
+        <MenuPage />
+      </Box>
     </ThemeProvider>
   );
 }
-
-export default App;

@@ -1,54 +1,80 @@
+// theme.js
 import { createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
   palette: {
-    mode: "light",
-    primary: {
-      main: "#F7C6C7", // pastel pink
-      contrastText: "#4E3B31", // dark brown text
-    },
-    secondary: {
-      main: "#A67B5B", // coffee brown
-      contrastText: "#FFF5F2", // light text on brown
-    },
     background: {
-      default: "#FFF5F2", // page background
-      paper: "#FFF1E6", // card background
+      default: "#fafafa",
+      paper: "#ffffff",
     },
     text: {
-      primary: "#4E3B31", // dark brown
-      secondary: "#8C6A57", // lighter brown for descriptions
+      primary: "#574243",
+      secondary: "#7a6a67",
+    },
+    primary: {
+      main: "#6b5850", // brown button
+      contrastText: "#ffffff", // white text
+    },
+    secondary: {
+      main: "#f5eef2ff", // mauve accent
+      contrastText: "#ffffff", // white text
     },
   },
+  shape: {
+    borderRadius: 16,
+  },
+  shadows: Array(25).fill("0 6px 16px rgba(0,0,0,0.06)"),
   typography: {
-    fontFamily: '"Nunito", sans-serif', // default body font
+    fontFamily: `"Comfortaa", sans-serif`,
     h1: {
-      fontFamily: '"Pacifico", cursive', // menu header
-      fontSize: "2rem",
+      fontFamily: `"Comfortaa", sans-serif`,
       fontWeight: 700,
-      color: "#A67B5B",
+      fontSize: "1.8rem",
+      color: "#574243",
     },
-    h2: {
-      fontFamily: '"Playfair Display", serif', // item names
-      fontSize: "1.5rem",
-      fontWeight: 600,
-      color: "#4E3B31",
+    subtitle1: {
+      fontFamily: `"Kalam", cursive`,
+      fontSize: "0.9rem",
+      color: "#7a6a67",
     },
     h3: {
-      fontFamily: '"Playfair Display", serif',
-      fontSize: "1.25rem",
-      fontWeight: 500,
-      color: "#4E3B31",
-    },
-    body1: {
-      fontFamily: '"Nunito", sans-serif', // item descriptions
-      fontSize: "0.9rem",
-      color: "#8C6A57",
+      fontSize: "1rem",
+      fontWeight: 600,
+      color: "#574243",
     },
     body2: {
-      fontFamily: '"Nunito", sans-serif',
-      fontSize: "0.8rem",
-      color: "#8C6A57",
+      fontSize: "0.85rem",
+      color: "#7a6a67",
+    },
+  },
+  components: {
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          borderRadius: 16,
+          padding: "14px",
+          display: "flex",
+          gap: "12px",
+          alignItems: "center",
+          border: "1px solid #e8e2e4",
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          color: "#ffffff",
+          background: "#6b5850",
+          borderRadius: 12,
+          padding: "8px 12px",
+          boxShadow: "0 6px 12px rgba(60,48,40,0.16)",
+          fontWeight: 700,
+          textTransform: "none",
+          "&:hover": {
+            background: "#594841",
+          },
+        },
+      },
     },
   },
 });
