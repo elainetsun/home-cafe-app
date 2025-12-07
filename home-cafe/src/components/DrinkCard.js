@@ -1,8 +1,9 @@
 import theme from "../theme";
 import { Box, Card, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { emojis } from "../sampleMenuItems";
 
-export const DrinkCard = ({ id, emoji, desc, title }) => {
+export const DrinkCard = ({ id, emoji, description, displayName }) => {
   const navigate = useNavigate();
   const handleOrder = () => {
     navigate(`/order/${id}`);
@@ -22,13 +23,13 @@ export const DrinkCard = ({ id, emoji, desc, title }) => {
           fontSize: 28,
         }}
       >
-        {emoji}
+        {emojis[emoji]}
       </Box>
 
       <Box flex={1}>
-        <Typography variant="h3">{title}</Typography>
+        <Typography variant="h3">{displayName}</Typography>
         <Typography variant="body2" mt={0.5}>
-          {desc}
+          {description}
         </Typography>
       </Box>
 

@@ -1,26 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { MENU_ITEMS_URL } from "../constants";
-
-const menuItems = [
-  {
-    id: 1,
-    emoji: "☕",
-    title: "Cafe latte",
-    desc: "Espresso, milk",
-  },
-  {
-    id: 2,
-    emoji: "🍵",
-    title: "Matcha latte",
-    desc: "Matcha, milk",
-  },
-  {
-    id: 3,
-    emoji: "🍫",
-    title: "Hot chocolate",
-    desc: "Yuum",
-  },
-];
+import { menuItems } from "../sampleMenuItems.js";
 
 const getMenuItems = () => {
   return menuItems;

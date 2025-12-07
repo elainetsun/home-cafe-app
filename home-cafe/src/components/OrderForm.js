@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import {
   TextField,
   TextArea,
@@ -34,6 +35,10 @@ export const OrderForm = () => {
   } = useForm();
 
   const { id } = useParams();
+  const navigate = useNavigate();
+  const handleCancel = () => {
+    navigate("/");
+  };
 
   const selectMenuItem = useCallback(
     (items) => {
@@ -62,7 +67,7 @@ export const OrderForm = () => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box sx={{ display: "flex", flexDirection: "column", p: 2, gap: 2 }}>
         <Typography variant="h2" sx={{ m: 0 }}>
-          Order {selectedMenuItem?.title}
+          Order {selectedMenuItem?.displayName}
         </Typography>
         <TextField
           label="Name"
@@ -71,21 +76,23 @@ export const OrderForm = () => {
           helperText={errors?.name?.message}
           {...register(NAME_INPUT, { required: "Name is required" })}
         />
-        <TextField
-          select
-          label="Sweetener"
-          variant="outlined"
-          error={Boolean(errors.sweetness)}
-          helperText={errors.sweetness?.message}
-          defaultValue={sugarMenuOptions[0]}
-          {...register(SUGAR_INPUT, {
-            required: "Please select a sweetness level",
-          })}
-        >
-          {sugarMenuOptions.map((option) => (
-            <MenuItem value={option}>{option}</MenuItem>
-          ))}
-        </TextField>
+        {selectedMenuItem?.isSugarCustomizable && (
+          <TextField
+            select
+            label="Sweetener"
+            variant="outlined"
+            error={Boolean(errors.sweetness)}
+            helperText={errors.sweetness?.message}
+            defaultValue={sugarMenuOptions[0]}
+            {...register(SUGAR_INPUT, {
+              required: "Please select a sweetness level",
+            })}
+          >
+            {sugarMenuOptions.map((option) => (
+              <MenuItem value={option}>{option}</MenuItem>
+            ))}
+          </TextField>
+        )}
         <TextField
           multiline
           rows={4}
@@ -94,9 +101,18 @@ export const OrderForm = () => {
           helperText="half sweet, extra shot, less ice, ...etc"
           {...register(REQUESTS_INPUT)}
         />
-        <Button sx={{ width: "fit-content" }} type="submit">
-          Place order
-        </Button>
+        <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1 }}>
+          <Button
+            onClick={handleCancel}
+            sx={{ width: "fit-content" }}
+            variant="outlined"
+          >
+            Cancel
+          </Button>
+          <Button sx={{ width: "fit-content" }} type="submit">
+            Place order
+          </Button>
+        </Box>
       </Box>
     </form>
   );

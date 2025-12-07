@@ -79,6 +79,14 @@ const theme = createTheme({
             background: "#594841",
           },
         },
+        outlined: {
+          borderColor: "#594841",
+          color: "#594841",
+          backgroundColor: "transparent",
+          "&:hover": {
+            background: "transparent",
+          },
+        },
       },
     },
   },
