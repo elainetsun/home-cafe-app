@@ -1,28 +1,10 @@
-import theme from "../theme";
-import BearLogoImg from "../sp.jpg";
-import { Box, Card, Typography, Button } from "@mui/material";
-import { AppHeader } from "./AppHeader";
+import { Box } from "@mui/material";
 import { DrinkCard } from "./DrinkCard";
-
-const cards = [
-  {
-    emoji: "☕",
-    title: "Cafe latte",
-    desc: "Espresso, milk",
-  },
-  {
-    emoji: "🍵",
-    title: "Matcha latte",
-    desc: "Matcha, milk",
-  },
-  {
-    emoji: "🍫",
-    title: "Hot chocolate",
-    desc: "Yuum",
-  },
-];
+import { useMenuItems } from "../hooks/useMenuItems";
 
 export const MenuPage = () => {
+  const { data: menuItems = [] } = useMenuItems();
+
   return (
     <Box
       sx={{
@@ -31,7 +13,7 @@ export const MenuPage = () => {
         gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
       }}
     >
-      {cards.map((card) => (
+      {menuItems?.map((card) => (
         <DrinkCard {...card} />
       ))}
     </Box>

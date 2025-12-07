@@ -1,4 +1,4 @@
-import { Box, Card, Typography, Button } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import BearLogoImg from "../sp.jpg";
 import theme from "../theme";
 import { APP_HEADER_TEXT, APP_HEADER_SUBTEXT } from "../constants";
