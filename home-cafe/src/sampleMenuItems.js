@@ -15,7 +15,7 @@ export const menuItems = [
   {
     id: 1,
     emoji: 1,
-    displayName: "Cafe latte",
+    displayName: "Cafe latte test",
     description: "espresso, milk",
     isSugarCustomizable: true,
     tags: [1],
