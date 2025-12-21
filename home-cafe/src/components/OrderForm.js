@@ -1,31 +1,15 @@
 import { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import {
-  TextField,
-  TextArea,
-  Button,
-  Box,
-  MenuItem,
-  Typography,
-} from "@mui/material";
+import { TextField, Button, Box, MenuItem, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useMenuItems } from "../hooks/useMenuItems";
+import { useOrderItem } from "../hooks/useOrderItem";
+import { sugarMenuOptions } from "../constants";
 
-const NAME_INPUT = "name";
-const REQUESTS_INPUT = "requests";
-const SUGAR_INPUT = "sugar";
-
-const sugarMenuOptions = [
-  "no sugar added",
-  "maple syrup",
-  "simple syrup",
-  "honey",
-  "monk fruit",
-  "sugar free pumpkin",
-  "sugar free vanilla",
-  "sugar free hazelnut",
-];
+const NAME_INPUT = "customerName";
+const REQUESTS_INPUT = "specialRequests";
+const SUGAR_INPUT = "sweetener";
 
 export const OrderForm = () => {
   const {
@@ -36,74 +20,85 @@ export const OrderForm = () => {
 
   const { id } = useParams();
   const navigate = useNavigate();
-  const handleCancel = () => {
+
+  const handleNavToMenu = () => {
     navigate("/");
+  };
+
+  const handleSuccess = () => {
+    handleNavToMenu();
+    alert("Order was placed!");
   };
 
   const selectMenuItem = useCallback(
     (items) => {
-      return items.find((item) => item?.id === Number(id));
+      return items.find((item) => Number(item?.id) === Number(id));
     },
-    [id]
+    [id],
   );
 
   const { data: selectedMenuItem } = useMenuItems({ select: selectMenuItem });
+  const { mutate } = useOrderItem({ onSuccess: handleSuccess });
 
   const onSubmit = (data) => {
     const orderData = {
       ...data,
       ...selectedMenuItem,
     };
-    let tableString = "Order submitted:\n";
-    for (const key in orderData) {
-      if (Object.hasOwnProperty.call(orderData, key)) {
-        tableString += `${key}: ${orderData[key]}\n`;
-      }
-    }
-    alert(tableString);
+    mutate(orderData);
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box sx={{ display: "flex", flexDirection: "column", p: 2, gap: 2 }}>
         <Typography variant="h2" sx={{ m: 0 }}>
-          Order {selectedMenuItem?.displayName}
+          Order {selectedMenuItem?.name}
         </Typography>
         <TextField
           label="Name"
           variant="outlined"
-          error={Boolean(errors?.name)}
-          helperText={errors?.name?.message}
-          {...register(NAME_INPUT, { required: "Name is required" })}
+          error={Boolean(errors[NAME_INPUT])}
+          helperText={errors[NAME_INPUT]?.message}
+          {...register(NAME_INPUT, {
+            required: "Name is required",
+            maxLength: { value: 20, message: "Max 20 characters" },
+          })}
         />
-        {selectedMenuItem?.isSugarCustomizable && (
-          <TextField
-            select
-            label="Sweetener"
-            variant="outlined"
-            error={Boolean(errors.sweetness)}
-            helperText={errors.sweetness?.message}
-            defaultValue={sugarMenuOptions[0]}
-            {...register(SUGAR_INPUT, {
-              required: "Please select a sweetness level",
-            })}
-          >
-            {sugarMenuOptions.map((option) => (
-              <MenuItem value={option}>{option}</MenuItem>
-            ))}
-          </TextField>
-        )}
+
+        <TextField
+          select
+          label="Sweetener"
+          variant="outlined"
+          error={Boolean(errors[SUGAR_INPUT])}
+          helperText={errors[SUGAR_INPUT]?.message}
+          defaultValue={sugarMenuOptions[0]}
+          {...register(SUGAR_INPUT, {
+            required: "Please select a sweetness level",
+          })}
+        >
+          {sugarMenuOptions.map((option) => (
+            <MenuItem value={option}>{option}</MenuItem>
+          ))}
+        </TextField>
+
         <TextField
           multiline
-          rows={4}
+          rows={2}
           label="Special requests"
           variant="outlined"
-          helperText="half sweet, extra shot, less ice, ...etc"
-          {...register(REQUESTS_INPUT)}
+          error={Boolean(errors[REQUESTS_INPUT])}
+          helperText={
+            Boolean(errors[REQUESTS_INPUT])
+              ? errors[REQUESTS_INPUT]?.message
+              : "half sweet, extra shot, less ice, ...etc"
+          }
+          {...register(REQUESTS_INPUT, {
+            maxLength: { value: 75, message: "Max 75 characters" },
+          })}
         />
         <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1 }}>
           <Button
-            onClick={handleCancel}
+            onClick={handleNavToMenu}
             sx={{ width: "fit-content" }}
             variant="outlined"
           >

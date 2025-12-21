@@ -6,6 +6,7 @@ import { Routes, Route } from "react-router-dom";
 import { MenuPage } from "./components/MenuPage";
 import { AppHeader } from "./components/AppHeader";
 import { OrderForm } from "./components/OrderForm";
+import { PendingOrdersList } from "./components/PendingOrdersList";
 
 const queryClient = new QueryClient();
 
@@ -18,6 +19,7 @@ export default function App() {
           <Routes>
             <Route path="*" element={<MenuPage />} />
             <Route path="/order/:id" element={<OrderForm />} />
+            <Route path="/pendingOrders" element={<PendingOrdersList />} />
           </Routes>
         </Box>
       </ThemeProvider>

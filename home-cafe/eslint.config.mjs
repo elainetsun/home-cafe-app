@@ -11,9 +11,9 @@ export default [
       sourceType: "module",
       parserOptions: {
         ecmaFeatures: {
-          jsx: true
-        }
-      }
+          jsx: true,
+        },
+      },
     },
     plugins: {
       react,
@@ -31,7 +31,7 @@ export default [
       // Accessibility rules
       "jsx-a11y/anchor-is-valid": "warn",
       "jsx-a11y/alt-text": "warn",
-      "jsx-a11y/no-onchange": "warn"
+      "jsx-a11y/no-onchange": "warn",
     },
     ignores: ["node_modules/**", ".next/**", "dist/**"],
   },
