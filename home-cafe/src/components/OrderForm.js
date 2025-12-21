@@ -1,7 +1,7 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { TextField, Button, Box, MenuItem, Typography } from "@mui/material";
+import { TextField, Button, Box, MenuItem, Typography, Dialog, DialogTitle, DialogActions, } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useMenuItems } from "../hooks/useMenuItems";
 import { useOrderItem } from "../hooks/useOrderItem";
@@ -12,6 +12,7 @@ const REQUESTS_INPUT = "specialRequests";
 const SUGAR_INPUT = "sweetener";
 
 export const OrderForm = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const {
     register,
     handleSubmit,
@@ -25,11 +26,6 @@ export const OrderForm = () => {
     navigate("/");
   };
 
-  const handleSuccess = () => {
-    handleNavToMenu();
-    alert("Order was placed!");
-  };
-
   const selectMenuItem = useCallback(
     (items) => {
       return items.find((item) => Number(item?.id) === Number(id));
@@ -38,7 +34,7 @@ export const OrderForm = () => {
   );
 
   const { data: selectedMenuItem } = useMenuItems({ select: selectMenuItem });
-  const { mutate } = useOrderItem({ onSuccess: handleSuccess });
+  const { mutate } = useOrderItem();
 
   const onSubmit = (data) => {
     const orderData = {
@@ -46,6 +42,7 @@ export const OrderForm = () => {
       ...selectedMenuItem,
     };
     mutate(orderData);
+    setIsOpen(true);
   };
 
   return (
@@ -109,6 +106,20 @@ export const OrderForm = () => {
           </Button>
         </Box>
       </Box>
+      <ConfirmDialog open={isOpen} title="Thank you! Your order was submitted" onCancel={() => setIsOpen(false)} onConfirm={handleNavToMenu}/>
     </form>
   );
 };
+
+export function ConfirmDialog({ open, title, onConfirm, onCancel }) {
+  return (
+    <Dialog open={open} onClose={onCancel}>
+      <DialogTitle>{title}</DialogTitle>
+      <DialogActions>
+        <Button onClick={onConfirm} variant="contained" autoFocus>
+          Confirm
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+}

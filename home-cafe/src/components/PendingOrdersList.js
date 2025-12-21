@@ -96,7 +96,7 @@ export const PendingOrdersList = () => {
   );
 };
 
-const getItemName = (id, menuItems) => {
+const getItemName = (id, menuItems = []) => {
   const item = menuItems.find((item) => item.id === id);
   return item?.name;
 };
