@@ -12,6 +12,7 @@ export const sugarMenuOptions = [
   "simple syrup",
   "honey",
   "monk fruit",
+  "chocolate sauce",
   "sugar free pumpkin",
   "sugar free vanilla",
   "sugar free hazelnut",
