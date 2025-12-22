@@ -3,7 +3,14 @@ import { Box, Card, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { emojis } from "../sampleMenuItems";
 
-export const DrinkCard = ({ id, emoji = 1, description, name }) => {
+export const DrinkCard = ({
+  id,
+  emoji = 1,
+  description,
+  name,
+  isEdit = false,
+  onEdit = () => {},
+}) => {
   const navigate = useNavigate();
   const handleOrder = () => {
     navigate(`/order/${id}`);
@@ -33,9 +40,18 @@ export const DrinkCard = ({ id, emoji = 1, description, name }) => {
         </Typography>
       </Box>
 
-      <Box textAlign="right">
-        <Button variant="contained" onClick={handleOrder}>
-          Order
+      <Box textAlign="right" display="flex" gap={1}>
+       {isEdit &&   <Button
+          variant="outlined"
+         
+        >
+          Delete
+        </Button>}
+           <Button
+          variant="contained"
+          onClick={() => (isEdit ? onEdit(id) : handleOrder())}
+        >
+          {isEdit ? "Edit" : "Order"}
         </Button>
       </Box>
     </Card>

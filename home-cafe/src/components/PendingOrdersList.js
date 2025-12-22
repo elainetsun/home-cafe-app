@@ -99,6 +99,7 @@ export const PendingOrdersList = () => {
                 <Button
                   onClick={() => handleFinishOrder(id)}
                   sx={{ height: "fit-content" }}
+                  variant="contained"
                 >
                   Complete
                 </Button>

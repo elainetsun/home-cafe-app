@@ -99,7 +99,8 @@ export const OrderForm = () => {
           error={Boolean(errors[SUGAR_INPUT])}
           helperText={
             errors[SUGAR_INPUT]?.message ||
-            (!allowSugarOption && "cannot change sweetener for this drink")
+            (!allowSugarOption &&
+              "this drink includes sweetener or cannot be changed")
           }
           defaultValue={defaultSugarType}
           {...register(SUGAR_INPUT, {
@@ -126,6 +127,7 @@ export const OrderForm = () => {
             ))}
           </TextField>
         )}
+        
         {allowDecafOption && (
           <FormControlLabel
             sx={{ width: "fit-content" }}
@@ -141,7 +143,7 @@ export const OrderForm = () => {
           helperText={
             Boolean(errors[REQUESTS_INPUT])
               ? errors[REQUESTS_INPUT]?.message
-              : "half sweet, extra shot, less ice, ...etc"
+              : "add whipped cream, add cold foam, add extra shot..."
           }
           {...register(REQUESTS_INPUT, {
             maxLength: { value: 75, message: "Max 75 characters" },
