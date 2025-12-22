@@ -75,6 +75,7 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
+          width: "fit-content",
           color: "#ffffff",
           background: "#6b5850",
           borderRadius: 12,
@@ -93,6 +94,15 @@ const theme = createTheme({
           "&:hover": {
             background: "transparent",
           },
+        },
+        text: {
+          borderColor: "transparent",
+          color: "#594841",
+          backgroundColor: "transparent",
+          "&:hover": {
+            background: "transparent",
+          },
+          boxShadow: "none",
         },
       },
     },

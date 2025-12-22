@@ -1,5 +1,12 @@
 import CircularProgress from "@mui/material/CircularProgress";
-import Box from "@mui/material/Box";
+import {
+  Box,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+} from "@mui/material";
 import { defaultSugarLevel } from "../constants";
 
 export const getTimeAgo = (createdAt) => {
@@ -56,5 +63,25 @@ export const LoadingSpinner = () => {
     >
       <CircularProgress />
     </Box>
+  );
+};
+
+export const ConfirmDialog = ({
+  open,
+  title,
+  content,
+  onConfirm,
+  onCancel,
+}) => {
+  return (
+    <Dialog open={open} onClose={onCancel}>
+      <DialogTitle>{title}</DialogTitle>
+      <DialogContent>{content}</DialogContent>
+      <DialogActions>
+        <Button onClick={onConfirm} variant="contained" autoFocus>
+          Ok
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };

@@ -7,6 +7,8 @@ import { MenuPage } from "./components/MenuPage";
 import { AppHeader } from "./components/AppHeader";
 import { OrderForm } from "./components/OrderForm";
 import { PendingOrdersList } from "./components/PendingOrdersList";
+import { EditMenu } from "./components/EditMenu";
+import { EditMenuItemForm } from "./components/EditMenuItemForm";
 
 const queryClient = new QueryClient();
 
@@ -20,6 +22,8 @@ export default function App() {
             <Route path="*" element={<MenuPage />} />
             <Route path="/order/:id" element={<OrderForm />} />
             <Route path="/pendingOrders" element={<PendingOrdersList />} />
+            <Route path="/editMenu" element={<EditMenu />} />
+            <Route path="/editMenu/:id" element={<EditMenuItemForm />} />
           </Routes>
         </Box>
       </ThemeProvider>

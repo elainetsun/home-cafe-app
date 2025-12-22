@@ -34,7 +34,9 @@ export const DrinkCard = ({ id, emoji = 1, description, name }) => {
       </Box>
 
       <Box textAlign="right">
-        <Button onClick={handleOrder}>Order</Button>
+        <Button variant="contained" onClick={handleOrder}>
+          Order
+        </Button>
       </Box>
     </Card>
   );

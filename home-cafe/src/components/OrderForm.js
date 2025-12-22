@@ -8,10 +8,6 @@ import {
   Box,
   MenuItem,
   Typography,
-  Dialog,
-  DialogTitle,
-  DialogActions,
-  DialogContent,
   FormControlLabel,
 } from "@mui/material";
 import { useParams } from "react-router-dom";
@@ -23,7 +19,7 @@ import {
   sugarLevelOptions,
   sugarMenuOptions,
 } from "../constants";
-import { getRandomPrice, LoadingSpinner } from "./utils";
+import { getRandomPrice, LoadingSpinner, ConfirmDialog } from "./utils";
 
 const NAME_INPUT = "customerName";
 const REQUESTS_INPUT = "specialRequests";
@@ -59,12 +55,12 @@ export const OrderForm = () => {
   const { data: selectedMenuItem = {} } = useMenuItems({
     select: selectMenuItem,
   });
+
   const { mutate, isLoading } = useOrderItem({
     onSuccess: () => setIsOpen(true),
   });
 
   const onSubmit = (data) => {
-    console.log("elaine", data);
     const orderData = {
       ...data,
       ...selectedMenuItem,
@@ -159,7 +155,11 @@ export const OrderForm = () => {
           >
             Cancel
           </Button>
-          <Button sx={{ width: "fit-content" }} type="submit">
+          <Button
+            variant="contained"
+            sx={{ width: "fit-content" }}
+            type="submit"
+          >
             Place order
           </Button>
         </Box>
@@ -173,23 +173,4 @@ export const OrderForm = () => {
       />
     </form>
   );
-};
-const ConfirmDialog = ({ open, title, content, onConfirm, onCancel }) => {
-  return (
-    <Dialog open={open} onClose={onCancel}>
-      <DialogTitle>{title}</DialogTitle>
-      <DialogContent>{content}</DialogContent>
-      <DialogActions>
-        <Button onClick={onConfirm} variant="contained" autoFocus>
-          Ok
-        </Button>
-      </DialogActions>
-    </Dialog>
-  );
-};
-
-const SweetnessSelectionField = ({ allowSugarOption, errors, register }) => {
-  // const { useWatch } = useFormContext();
-
-  return <></>;
 };
