@@ -1,7 +1,16 @@
 import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { TextField, Button, Box, MenuItem, Typography, Dialog, DialogTitle, DialogActions, } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Box,
+  MenuItem,
+  Typography,
+  Dialog,
+  DialogTitle,
+  DialogActions,
+} from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useMenuItems } from "../hooks/useMenuItems";
 import { useOrderItem } from "../hooks/useOrderItem";
@@ -106,7 +115,12 @@ export const OrderForm = () => {
           </Button>
         </Box>
       </Box>
-      <ConfirmDialog open={isOpen} title="Thank you! Your order was submitted" onCancel={() => setIsOpen(false)} onConfirm={handleNavToMenu}/>
+      <ConfirmDialog
+        open={isOpen}
+        title="Thank you! Your order was submitted"
+        onCancel={() => setIsOpen(false)}
+        onConfirm={handleNavToMenu}
+      />
     </form>
   );
 };
