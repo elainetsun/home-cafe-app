@@ -41,13 +41,8 @@ export const DrinkCard = ({
       </Box>
 
       <Box textAlign="right" display="flex" gap={1}>
-       {isEdit &&   <Button
-          variant="outlined"
-         
-        >
-          Delete
-        </Button>}
-           <Button
+        {isEdit && <Button variant="outlined">Delete</Button>}
+        <Button
           variant="contained"
           onClick={() => (isEdit ? onEdit(id) : handleOrder())}
         >
