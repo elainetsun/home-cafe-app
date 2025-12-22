@@ -83,6 +83,5 @@ const MenuTabs = ({ menuItems = [] }) => {
 
 export const MenuPage = () => {
   const { data: menuItems = [] } = useMenuItems();
-
   return <MenuTabs menuItems={menuItems} />;
 };

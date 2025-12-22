@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import {
   TextField,
+  Switch,
   Button,
   Box,
   MenuItem,
@@ -10,28 +11,41 @@ import {
   Dialog,
   DialogTitle,
   DialogActions,
+  DialogContent,
+  FormControlLabel,
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useMenuItems } from "../hooks/useMenuItems";
 import { useOrderItem } from "../hooks/useOrderItem";
-import { sugarMenuOptions } from "../constants";
+import {
+  defaultSugarType,
+  defaultSugarLevel,
+  sugarLevelOptions,
+  sugarMenuOptions,
+} from "../constants";
+import { getRandomPrice, LoadingSpinner } from "./utils";
 
 const NAME_INPUT = "customerName";
 const REQUESTS_INPUT = "specialRequests";
 const SUGAR_INPUT = "sweetener";
+const DECAF_INPUT = "isDecaf";
+const SUGAR_LEVEL_INPUT = "sugarLevel";
 
 export const OrderForm = () => {
   const [isOpen, setIsOpen] = useState(false);
   const {
     register,
+    watch,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
   const { id } = useParams();
   const navigate = useNavigate();
+  const sugarSelection = watch(SUGAR_INPUT);
 
   const handleNavToMenu = () => {
+    setIsOpen(false);
     navigate("/");
   };
 
@@ -42,23 +56,33 @@ export const OrderForm = () => {
     [id],
   );
 
-  const { data: selectedMenuItem } = useMenuItems({ select: selectMenuItem });
-  const { mutate } = useOrderItem();
+  const { data: selectedMenuItem = {} } = useMenuItems({
+    select: selectMenuItem,
+  });
+  const { mutate, isLoading } = useOrderItem({
+    onSuccess: () => setIsOpen(true),
+  });
 
   const onSubmit = (data) => {
+    console.log("elaine", data);
     const orderData = {
       ...data,
       ...selectedMenuItem,
     };
     mutate(orderData);
-    setIsOpen(true);
   };
+
+  const { name, allowDecafOption, allowSugarOption } = selectedMenuItem;
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box sx={{ display: "flex", flexDirection: "column", p: 2, gap: 2 }}>
         <Typography variant="h2" sx={{ m: 0 }}>
-          Order {selectedMenuItem?.name}
+          Order {name}
         </Typography>
         <TextField
           label="Name"
@@ -72,12 +96,16 @@ export const OrderForm = () => {
         />
 
         <TextField
+          disabled={!allowSugarOption}
           select
           label="Sweetener"
           variant="outlined"
           error={Boolean(errors[SUGAR_INPUT])}
-          helperText={errors[SUGAR_INPUT]?.message}
-          defaultValue={sugarMenuOptions[0]}
+          helperText={
+            errors[SUGAR_INPUT]?.message ||
+            (!allowSugarOption && "cannot change sweetener for this drink")
+          }
+          defaultValue={defaultSugarType}
           {...register(SUGAR_INPUT, {
             required: "Please select a sweetness level",
           })}
@@ -87,9 +115,30 @@ export const OrderForm = () => {
           ))}
         </TextField>
 
+        {sugarSelection !== defaultSugarType && (
+          <TextField
+            select
+            label="Sugar Level"
+            variant="outlined"
+            error={Boolean(errors[SUGAR_LEVEL_INPUT])}
+            helperText={errors[SUGAR_LEVEL_INPUT]?.message}
+            defaultValue={defaultSugarLevel}
+            {...register(SUGAR_LEVEL_INPUT)}
+          >
+            {sugarLevelOptions.map((option) => (
+              <MenuItem value={option}>{option}</MenuItem>
+            ))}
+          </TextField>
+        )}
+        {allowDecafOption && (
+          <FormControlLabel
+            sx={{ width: "fit-content" }}
+            control={<Switch {...register(DECAF_INPUT)} />}
+            label="Decaf"
+          />
+        )}
+
         <TextField
-          multiline
-          rows={2}
           label="Special requests"
           variant="outlined"
           error={Boolean(errors[REQUESTS_INPUT])}
@@ -117,23 +166,30 @@ export const OrderForm = () => {
       </Box>
       <ConfirmDialog
         open={isOpen}
-        title="Thank you! Your order was submitted"
-        onCancel={() => setIsOpen(false)}
+        title="Thank you!"
+        content={`Your order has been submitted. You will be charged ${getRandomPrice()}`}
+        onCancel={handleNavToMenu}
         onConfirm={handleNavToMenu}
       />
     </form>
   );
 };
-
-export function ConfirmDialog({ open, title, onConfirm, onCancel }) {
+const ConfirmDialog = ({ open, title, content, onConfirm, onCancel }) => {
   return (
     <Dialog open={open} onClose={onCancel}>
       <DialogTitle>{title}</DialogTitle>
+      <DialogContent>{content}</DialogContent>
       <DialogActions>
         <Button onClick={onConfirm} variant="contained" autoFocus>
-          Confirm
+          Ok
         </Button>
       </DialogActions>
     </Dialog>
   );
-}
+};
+
+const SweetnessSelectionField = ({ allowSugarOption, errors, register }) => {
+  // const { useWatch } = useFormContext();
+
+  return <></>;
+};

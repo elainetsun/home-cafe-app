@@ -53,6 +53,13 @@ const theme = createTheme({
     },
   },
   components: {
+    MuiSwitch: {
+      styleOverrides: {
+        switchBase: {
+          color: "#e2e2e2ff",
+        },
+      },
+    },
     MuiCard: {
       styleOverrides: {
         root: {

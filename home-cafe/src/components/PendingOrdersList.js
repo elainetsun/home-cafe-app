@@ -3,6 +3,7 @@ import { useMenuItems } from "../hooks/useMenuItems";
 import { usePendingOrderList } from "../hooks/usePendingOrderList";
 import { Stack, Button, Box, Typography } from "@mui/material";
 import { useUpdateOrderStatus } from "../hooks/useUpdateOrderStatus";
+import { getTimeAgo } from "./utils";
 
 const breakStringEvery20 = (text = "") => {
   return text.match(/.{1,20}/g)?.join("\n") || "";
@@ -11,7 +12,6 @@ const breakStringEvery20 = (text = "") => {
 export const PendingOrdersList = () => {
   const queryClient = useQueryClient();
   const { data = [] } = usePendingOrderList();
-  const { data: menuItems } = useMenuItems();
 
   const handleSuccess = () => {
     queryClient.invalidateQueries();
@@ -19,11 +19,11 @@ export const PendingOrdersList = () => {
 
   const handleCopy = ({
     customerName,
-    itemName,
+    menuItemName,
     sweetener,
     specialRequests,
   }) => {
-    const textToCopy = `Name: ${customerName}\nItem: ${itemName}\nSugar: ${sweetener}\nRequest:\n${breakStringEvery20(specialRequests)}`;
+    const textToCopy = `Name: ${customerName}\nItem: ${menuItemName}\nSugar: ${sweetener}\nRequest:\n${breakStringEvery20(specialRequests)}`;
     navigator.clipboard.writeText(textToCopy);
   };
 
@@ -47,11 +47,26 @@ export const PendingOrdersList = () => {
       </Box>
       {data.length === 0 && <Typography>No Orders</Typography>}
       {data.map((order) => {
-        const { id, customerName, sweetener, specialRequests, menuItemId } =
-          order;
-        const itemName = getItemName(menuItemId, menuItems);
+        const {
+          id,
+          customerName,
+          sweetener,
+          specialRequests,
+          menuItemName,
+          createdAt,
+        } = order;
+
         return (
           <>
+            <Typography
+              sx={{
+                marginBottom: "-15px",
+                fontSize: "12px",
+                paddingLeft: "5px",
+              }}
+            >
+              {getTimeAgo(createdAt)}
+            </Typography>
             <Box sx={rowSx}>
               <Stack
                 sx={{
@@ -63,7 +78,7 @@ export const PendingOrdersList = () => {
                 }}
               >
                 <div>Name: {customerName}</div>
-                <div>Item: {itemName}</div>
+                <div>Item: {menuItemName}</div>
                 <div>Sugar: {sweetener}</div>
                 <div>Request: {specialRequests}</div>
               </Stack>
@@ -71,7 +86,7 @@ export const PendingOrdersList = () => {
                 <Button
                   onClick={() =>
                     handleCopy({
-                      itemName,
+                      menuItemName,
                       customerName,
                       sweetener,
                       specialRequests,
