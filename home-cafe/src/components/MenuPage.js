@@ -42,15 +42,15 @@ const MenuTabs = ({ menuItems = [] }) => {
 
   const seasonalItems = useMemo(
     () => allItems.filter((item) => item?.name?.includes("seasonal")),
-    [menuItems],
+    [allItems],
   );
   const icedItems = useMemo(
     () => allItems.filter((item) => item?.name?.includes("Iced")),
-    [menuItems],
+    [allItems],
   );
   const hotItems = useMemo(
     () => allItems.filter((item) => !item?.name?.includes("Iced")),
-    [menuItems],
+    [allItems],
   );
 
   return (

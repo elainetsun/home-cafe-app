@@ -1,7 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
 import { LoadingSpinner } from "./utils";
-import { useMenuItemById } from "../hooks/useMenuItems";
 import {
   TextField,
   Switch,
