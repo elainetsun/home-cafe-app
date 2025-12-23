@@ -75,29 +75,12 @@ export const OrderForm = () => {
     return <LoadingSpinner />;
   }
 
-  const Fallback = ({ message }) => {
-    return (
-      <>
-        <Typography variant="h2" p={2}>
-          {message}
-        </Typography>
-        <Button
-          onClick={handleNavToMenu}
-          sx={{ width: "fit-content", m: 2 }}
-          variant="outlined"
-        >
-          Back
-        </Button>
-      </>
-    );
-  };
-
   if (error) {
-    return <Fallback message="An error occured." />;
+    return <Fallback message="An error occured." onBack={handleNavToMenu} />;
   }
 
   if (isItemOutOfStock) {
-    return <Fallback message="Sorry, this item is out of stock." />;
+    return <Fallback message="Sorry, this item is out of stock." onBack={handleNavToMenu} />;
   }
 
   return (
@@ -212,3 +195,20 @@ export const OrderForm = () => {
     </form>
   );
 };
+
+  const Fallback = ({ message , onBack}) => {
+    return (
+      <>
+        <Typography variant="h2" p={2}>
+          {message}
+        </Typography>
+        <Button
+          onClick={onBack}
+          sx={{ width: "fit-content", m: 2 }}
+          variant="outlined"
+        >
+          Back
+        </Button>
+      </>
+    );
+  };

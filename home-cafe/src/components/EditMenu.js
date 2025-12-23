@@ -16,7 +16,7 @@ export const EditMenu = () => {
     navigate(`/addMenuItem`);
   };
 
-  const { data: menuItems, isLoading } = useMenuItems();
+  const { data: menuItems = [], isLoading } = useMenuItems();
 
   const allItems = useMemo(
     () => menuItems.sort((a, b) => a?.id - b?.id),
