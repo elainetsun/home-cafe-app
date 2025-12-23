@@ -17,13 +17,12 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
-        <Box sx={{ p: 2 }}>
+        <Box sx={{ p: 1 }}>
           <AppHeader />
           <Routes>
             <Route path="*" element={<MenuPage />} />
             <Route path="/order/:id" element={<OrderForm />} />
             <Route path="/pendingOrders" element={<PendingOrdersList />} />
-
             <Route path="/editMenu" element={<EditMenu />} />
             <Route path="/editMenu/:id" element={<EditMenuItemForm />} />
             <Route path="/addMenuItem" element={<AddMenuItemForm />} />

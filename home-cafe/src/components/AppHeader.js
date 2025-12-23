@@ -4,7 +4,7 @@ import theme from "../theme";
 import { APP_HEADER_TEXT, APP_HEADER_SUBTEXT } from "../constants";
 
 export const AppHeader = () => (
-  <Box display="flex" gap={2} alignItems="center" mb={2}>
+  <Box display="flex" gap={2} alignItems="center" mb={2} p={1}>
     <Box
       sx={{
         width: 56,

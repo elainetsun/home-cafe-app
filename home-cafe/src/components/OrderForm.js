@@ -11,7 +11,7 @@ import {
   FormControlLabel,
 } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { useMenuItems } from "../hooks/useMenuItems";
+import { useMenuItemById } from "../hooks/useMenuItems";
 import { useOrderItem } from "../hooks/useOrderItem";
 import {
   defaultSugarType,
@@ -45,18 +45,13 @@ export const OrderForm = () => {
     navigate("/");
   };
 
-  const selectMenuItem = useCallback(
-    (items) => {
-      return items.find((item) => Number(item?.id) === Number(id));
-    },
-    [id],
-  );
+  const {
+    data: selectedMenuItem = {},
+    isLoading,
+    error,
+  } = useMenuItemById({ id });
 
-  const { data: selectedMenuItem = {} } = useMenuItems({
-    select: selectMenuItem,
-  });
-
-  const { mutate, isLoading } = useOrderItem({
+  const { mutate } = useOrderItem({
     onSuccess: () => setIsOpen(true),
   });
 
@@ -68,18 +63,59 @@ export const OrderForm = () => {
     mutate(orderData);
   };
 
-  const { name, allowDecafOption, allowSugarOption } = selectedMenuItem;
+  const {
+    name,
+    description,
+    isItemOutOfStock,
+    allowDecafOption,
+    allowSugarOption,
+  } = selectedMenuItem;
 
   if (isLoading) {
     return <LoadingSpinner />;
   }
 
+  const Fallback = ({ message }) => {
+    return (
+      <>
+        <Typography variant="h2" p={2}>
+          {message}
+        </Typography>
+        <Button
+          onClick={handleNavToMenu}
+          sx={{ width: "fit-content", m: 2 }}
+          variant="outlined"
+        >
+          Back
+        </Button>
+      </>
+    );
+  };
+
+  if (error) {
+    return <Fallback message="An error occured." />;
+  }
+
+  if (isItemOutOfStock) {
+    return <Fallback message="Sorry, this item is out of stock." />;
+  }
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Box sx={{ display: "flex", flexDirection: "column", p: 2, gap: 2 }}>
-        <Typography variant="h2" sx={{ m: 0 }}>
-          Order {name}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          p: 2,
+          paddingBottom: 0,
+        }}
+      >
+        <Typography variant="h2">Order {name}</Typography>
+        <Typography variant="body2" paddingLeft={"2px"}>
+          {description}
         </Typography>
+      </Box>
+      <Box sx={{ display: "flex", flexDirection: "column", p: 2, gap: 2 }}>
         <TextField
           label="Name"
           variant="outlined"

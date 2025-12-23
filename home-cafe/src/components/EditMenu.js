@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Box, Typography } from "@mui/material";
 import { useMenuItems } from "../hooks/useMenuItems";
@@ -16,6 +17,11 @@ export const EditMenu = () => {
   };
 
   const { data: menuItems, isLoading } = useMenuItems();
+
+  const allItems = useMemo(
+    () => menuItems.sort((a, b) => a?.id - b?.id),
+    [menuItems],
+  );
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -39,7 +45,7 @@ export const EditMenu = () => {
         </Button>
       </Box>
 
-      {menuItems?.map((card) => (
+      {allItems?.map((card) => (
         <DrinkCard isEdit onEdit={handleEdit} {...card} />
       ))}
     </Box>

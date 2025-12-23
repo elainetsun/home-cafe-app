@@ -14,6 +14,7 @@ import {
 const inputNames = {
   DECAF: "allowDecafOption",
   SUGAR: "allowSugarOption",
+  OUT_OF_STOCK: "isItemOutOfStock",
   DESCRIPTION: "description",
   NAME: "name",
 };
@@ -37,7 +38,7 @@ export const MenuItemForm = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Typography>
+      <Typography variant="h2" p={2}>
         {isEdit ? "Edit" : "Add"} {defaultValues?.name || "new item"}
       </Typography>
       <Box sx={{ display: "flex", flexDirection: "column", p: 2, gap: 2 }}>
@@ -82,6 +83,16 @@ export const MenuItemForm = ({
             />
           }
           label="allow sugar option"
+        />
+        <FormControlLabel
+          sx={{ width: "fit-content" }}
+          control={
+            <Switch
+              defaultChecked={defaultValues?.[inputNames.OUT_OF_STOCK]}
+              {...register(inputNames.OUT_OF_STOCK)}
+            />
+          }
+          label="out of stock"
         />
       </Box>
       <Box sx={{ display: "flex", gap: 1, justifyContent: "flex-end" }}>

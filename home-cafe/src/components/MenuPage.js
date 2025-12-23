@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { Tabs, Tab, Box, Typography } from "@mui/material";
 import { DrinkCard } from "./DrinkCard";
 import { useMenuItems } from "../hooks/useMenuItems";
+import { LoadingSpinner } from "./utils";
 
 const TabPanel = ({ value, index, children }) => (
   <div hidden={value !== index}>
@@ -28,16 +29,27 @@ const StyledCardContainer = ({ children }) => (
 const MenuTabs = ({ menuItems = [] }) => {
   const [value, setValue] = useState(0);
 
+  const allItems = useMemo(
+    () =>
+      menuItems.sort((a, b) => {
+        if (a.isItemOutOfStock !== b.isItemOutOfStock) {
+          return Number(a.outOfStock) - Number(b.outOfStock);
+        }
+        return a?.id - b?.id;
+      }),
+    [menuItems],
+  );
+
   const seasonalItems = useMemo(
-    () => menuItems.filter((item) => item?.name?.includes("seasonal")),
+    () => allItems.filter((item) => item?.name?.includes("seasonal")),
     [menuItems],
   );
   const icedItems = useMemo(
-    () => menuItems.filter((item) => item?.name?.includes("Iced")),
+    () => allItems.filter((item) => item?.name?.includes("Iced")),
     [menuItems],
   );
   const hotItems = useMemo(
-    () => menuItems.filter((item) => !item?.name?.includes("Iced")),
+    () => allItems.filter((item) => !item?.name?.includes("Iced")),
     [menuItems],
   );
 
@@ -51,7 +63,7 @@ const MenuTabs = ({ menuItems = [] }) => {
       </Tabs>
       <TabPanel value={value} index={0}>
         <StyledCardContainer>
-          {menuItems?.map((card) => (
+          {allItems?.map((card) => (
             <DrinkCard {...card} />
           ))}
         </StyledCardContainer>
@@ -82,6 +94,16 @@ const MenuTabs = ({ menuItems = [] }) => {
 };
 
 export const MenuPage = () => {
-  const { data: menuItems = [] } = useMenuItems();
+  const { data: menuItems = [], isLoading, error } = useMenuItems();
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+  if (error) {
+    return (
+      <Typography variant="h2" p={2}>
+        Snuffles Cafe is closed, please try again later.
+      </Typography>
+    );
+  }
   return <MenuTabs menuItems={menuItems} />;
 };

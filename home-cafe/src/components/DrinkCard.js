@@ -1,5 +1,5 @@
 import theme from "../theme";
-import { Box, Card, Typography, Button } from "@mui/material";
+import { Box, Card, Typography, Button, Tooltip } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { emojis } from "../sampleMenuItems";
 
@@ -8,6 +8,7 @@ export const DrinkCard = ({
   emoji = 1,
   description,
   name,
+  isItemOutOfStock = false,
   isEdit = false,
   onEdit = () => {},
 }) => {
@@ -16,22 +17,26 @@ export const DrinkCard = ({
     navigate(`/order/${id}`);
   };
 
+  const isOrderDisabled = !isEdit && isItemOutOfStock;
+
   return (
     <Card>
-      <Box
-        sx={{
-          width: 64,
-          height: 64,
-          borderRadius: 2,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          background: theme.palette.secondary.main,
-          fontSize: 28,
-        }}
-      >
-        {emojis[emoji]}
-      </Box>
+      {!isEdit && (
+        <Box
+          sx={{
+            width: 64,
+            height: 64,
+            borderRadius: 2,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: theme.palette.secondary.main,
+            fontSize: 28,
+          }}
+        >
+          {emojis[emoji]}
+        </Box>
+      )}
 
       <Box flex={1}>
         <Typography variant="h3">{name}</Typography>
@@ -42,12 +47,17 @@ export const DrinkCard = ({
 
       <Box textAlign="right" display="flex" gap={1}>
         {isEdit && <Button variant="outlined">Delete</Button>}
-        <Button
-          variant="contained"
-          onClick={() => (isEdit ? onEdit(id) : handleOrder())}
-        >
-          {isEdit ? "Edit" : "Order"}
-        </Button>
+        <Tooltip title={isOrderDisabled ? "Out of stock" : ""}>
+          <Box component="span" sx={{ cursor: "not-allowed" }}>
+            <Button
+              disabled={isOrderDisabled}
+              variant="contained"
+              onClick={() => (isEdit ? onEdit(id) : handleOrder())}
+            >
+              {isEdit ? "Edit" : "Order"}
+            </Button>
+          </Box>
+        </Tooltip>
       </Box>
     </Card>
   );
