@@ -43,7 +43,7 @@ export const getRandomPrice = () => {
 export const formatSpecialRequests = ({
   isDecaf,
   specialRequests,
-  sugarLevel,
+  sugarLevel = defaultSugarLevel,
 }) => {
   const decaf = isDecaf ? "DECAF" : "";
   const sugarPercent = sugarLevel !== defaultSugarLevel ? `${sugarLevel}` : "";
