@@ -131,7 +131,7 @@ export const OrderForm = () => {
           ))}
         </TextField>
 
-        {sugarSelection !== defaultSugarType && (
+        {(sugarSelection || defaultSugarType ) !== defaultSugarType && (
           <TextField
             select
             label="Sugar Level"
