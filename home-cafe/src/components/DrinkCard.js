@@ -5,7 +5,7 @@ import { emojis } from "../sampleMenuItems";
 
 export const DrinkCard = ({
   id,
-  emoji = 1,
+  imageURL,
   description,
   name,
   isItemOutOfStock = false,
@@ -34,7 +34,7 @@ export const DrinkCard = ({
             fontSize: 28,
           }}
         >
-          {emojis[emoji]}
+        {imageURL ? <img src={imageURL} alt={description} style={{ height: 64, width: 64, borderRadius: "50%", objectFit: "cover"}} /> : emojis[1]}
         </Box>
       )}
 

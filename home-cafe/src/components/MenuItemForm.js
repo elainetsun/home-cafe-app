@@ -15,6 +15,7 @@ const inputNames = {
   OUT_OF_STOCK: "isItemOutOfStock",
   DESCRIPTION: "description",
   NAME: "name",
+  IMAGE_URL: "imageURL",
 };
 
 export const MenuItemForm = ({
@@ -59,6 +60,16 @@ export const MenuItemForm = ({
           helperText={errors[inputNames.DESCRIPTION]?.message}
           {...register(inputNames.DESCRIPTION, {
             required: "Description is required",
+            maxLength: { value: 100, message: "Max 100 characters" },
+          })}
+        />
+         <TextField
+          defaultValue={defaultValues?.[inputNames.IMAGE_URL]}
+          label="Image Id"
+          variant="outlined"
+          error={Boolean(errors[inputNames.IMAGE_URL])}
+          helperText={errors[inputNames.IMAGE_URL]?.message}
+          {...register(inputNames.IMAGE_URL, {
             maxLength: { value: 100, message: "Max 100 characters" },
           })}
         />
