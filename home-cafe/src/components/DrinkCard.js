@@ -15,7 +15,9 @@ export const DrinkCard = ({
   onEdit = () => {},
 }) => {
   const queryClient = useQueryClient();
-  const { mutate } = useDeleteMenuItem({ onSuccess: () => queryClient.refetchQueries() });
+  const { mutate } = useDeleteMenuItem({
+    onSuccess: () => queryClient.refetchQueries(),
+  });
   const navigate = useNavigate();
   const handleOrder = () => {
     navigate(`/order/${id}`);
@@ -40,20 +42,39 @@ export const DrinkCard = ({
           fontSize: 28,
         }}
       >
-        {imageURL ? <img src={imageURL} alt={description} style={{ height: 64, width: 64, borderRadius: "50%", objectFit: "cover"}} /> : emojis[1]}
+        {imageURL ? (
+          <img
+            src={imageURL}
+            alt={description}
+            style={{
+              height: 64,
+              width: 64,
+              borderRadius: "50%",
+              objectFit: "cover",
+            }}
+          />
+        ) : (
+          emojis[1]
+        )}
       </Box>
       <Box flex={1}>
         <Typography variant="h3">{name}</Typography>
         <Typography variant="body2" mt={0.5}>
           {description}
         </Typography>
-        {isItemOutOfStock && <Typography variant="body2" mt={0.5} color="red">
-           Out of stock
-        </Typography>}
+        {isItemOutOfStock && (
+          <Typography variant="body2" mt={0.5} color="red">
+            Out of stock
+          </Typography>
+        )}
       </Box>
 
       <Box textAlign="right" display="flex" gap={1}>
-        {isEdit && <Button variant="outlined" onClick={handleDelete}>Delete</Button>}
+        {isEdit && (
+          <Button variant="outlined" onClick={handleDelete}>
+            Delete
+          </Button>
+        )}
         <Tooltip title={isOrderDisabled ? "Out of stock" : ""}>
           <Box component="span" sx={{ cursor: "not-allowed" }}>
             <Button

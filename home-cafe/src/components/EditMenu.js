@@ -17,7 +17,7 @@ export const EditMenu = () => {
     navigate(`/addMenuItem`);
   };
 
-   const handleback = () => {
+  const handleback = () => {
     navigate(`/`);
   };
 
@@ -34,24 +34,24 @@ export const EditMenu = () => {
 
   return (
     <>
-     <Box
+      <Box
         sx={{
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
           alignItems: "center",
-          p: 1
+          p: 1,
         }}
       >
-      <Typography variant="h2" sx={{ m: 0 }}>
+        <Typography variant="h2" sx={{ m: 0 }}>
           Edit Menu Items
         </Typography>
-        <div> 
-          <Button variant="outlined" onClick={handleback} sx={{ mr:1 }}>
-          Menu Page
+        <div>
+          <Button variant="outlined" onClick={handleback} sx={{ mr: 1 }}>
+            Menu Page
           </Button>
           <Button variant="contained" onClick={handleAdd}>
-          + Add new menu item
+            + Add new menu item
           </Button>
         </div>
       </Box>
@@ -61,6 +61,5 @@ export const EditMenu = () => {
         ))}
       </StyledCardContainer>
     </>
-  
   );
 };

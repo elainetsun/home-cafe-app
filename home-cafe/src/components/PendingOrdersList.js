@@ -52,7 +52,7 @@ export const PendingOrdersList = () => {
           sweetener,
           specialRequests,
           menuItemName,
-          createdAt
+          createdAt,
         } = order;
 
         return (
@@ -107,7 +107,7 @@ export const PendingOrdersList = () => {
           </>
         );
       })}
-  </Stack>
+    </Stack>
   );
 };
 

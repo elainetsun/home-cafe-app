@@ -63,7 +63,7 @@ export const MenuItemForm = ({
             maxLength: { value: 100, message: "Max 100 characters" },
           })}
         />
-         <TextField
+        <TextField
           defaultValue={defaultValues?.[inputNames.IMAGE_URL]}
           label="Image Id"
           variant="outlined"

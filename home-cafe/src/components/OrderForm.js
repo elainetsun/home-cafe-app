@@ -69,7 +69,7 @@ export const OrderForm = () => {
     isItemOutOfStock,
     allowDecafOption,
     allowSugarOption,
-    imageURL
+    imageURL,
   } = selectedMenuItem;
 
   if (isLoading) {
@@ -81,28 +81,44 @@ export const OrderForm = () => {
   }
 
   if (isItemOutOfStock) {
-    return <Fallback message="Sorry, this item is out of stock." onBack={handleNavToMenu} />;
+    return (
+      <Fallback
+        message="Sorry, this item is out of stock."
+        onBack={handleNavToMenu}
+      />
+    );
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Box sx={{ display: "flex", flexDirection: "row", p: imageURL && 2}}>
-         {imageURL && <img src={imageURL} alt={description} style={{ height: 75, width: 75, borderRadius: "50%", objectFit: "cover"}} />}
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          p: 2,
-          paddingBottom: 0,
-        }}
-      >
-        <Typography variant="h2">Order {name}</Typography>
-        <Typography variant="body2" paddingLeft={"2px"}>
-          {description}
-        </Typography>
+      <Box sx={{ display: "flex", flexDirection: "row", p: imageURL && 2 }}>
+        {imageURL && (
+          <img
+            src={imageURL}
+            alt={description}
+            style={{
+              height: 75,
+              width: 75,
+              borderRadius: "50%",
+              objectFit: "cover",
+            }}
+          />
+        )}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            p: 2,
+            paddingBottom: 0,
+          }}
+        >
+          <Typography variant="h2">Order {name}</Typography>
+          <Typography variant="body2" paddingLeft={"2px"}>
+            {description}
+          </Typography>
+        </Box>
       </Box>
-      </Box>
-     
+
       <Box sx={{ display: "flex", flexDirection: "column", p: 2, gap: 2 }}>
         <TextField
           label="Name"
@@ -136,7 +152,7 @@ export const OrderForm = () => {
           ))}
         </TextField>
 
-        {(sugarSelection || defaultSugarType ) !== defaultSugarType && (
+        {(sugarSelection || defaultSugarType) !== defaultSugarType && (
           <TextField
             select
             label="Sugar Level"
@@ -201,19 +217,19 @@ export const OrderForm = () => {
   );
 };
 
-  const Fallback = ({ message , onBack}) => {
-    return (
-      <>
-        <Typography variant="h2" p={2}>
-          {message}
-        </Typography>
-        <Button
-          onClick={onBack}
-          sx={{ width: "fit-content", m: 2 }}
-          variant="outlined"
-        >
-          Back
-        </Button>
-      </>
-    );
-  };
+const Fallback = ({ message, onBack }) => {
+  return (
+    <>
+      <Typography variant="h2" p={2}>
+        {message}
+      </Typography>
+      <Button
+        onClick={onBack}
+        sx={{ width: "fit-content", m: 2 }}
+        variant="outlined"
+      >
+        Back
+      </Button>
+    </>
+  );
+};

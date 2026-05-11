@@ -3,8 +3,8 @@ import { MENU_ITEMS_URL } from "../constants";
 
 const deleteMenuItemFn = async (id) => {
   const res = await fetch(`${MENU_ITEMS_URL}/${id}`, {
-        method: "DELETE"
-    });
+    method: "DELETE",
+  });
   return res;
 };
 

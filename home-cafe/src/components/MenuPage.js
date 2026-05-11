@@ -20,7 +20,7 @@ export const StyledCardContainer = ({ children, sx }) => (
       display: "grid",
       gap: 2,
       gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
-      ...sx
+      ...sx,
     }}
   >
     {children}
