@@ -47,6 +47,9 @@ export const DrinkCard = ({
         <Typography variant="body2" mt={0.5}>
           {description}
         </Typography>
+        {isItemOutOfStock && <Typography variant="body2" mt={0.5} color="red">
+           Out of stock
+        </Typography>}
       </Box>
 
       <Box textAlign="right" display="flex" gap={1}>

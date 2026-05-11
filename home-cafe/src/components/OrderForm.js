@@ -69,6 +69,7 @@ export const OrderForm = () => {
     isItemOutOfStock,
     allowDecafOption,
     allowSugarOption,
+    imageURL
   } = selectedMenuItem;
 
   if (isLoading) {
@@ -85,6 +86,8 @@ export const OrderForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <Box sx={{ display: "flex", flexDirection: "row", p: imageURL && 2}}>
+         {imageURL && <img src={imageURL} alt={description} style={{ height: 75, width: 75, borderRadius: "50%", objectFit: "cover"}} />}
       <Box
         sx={{
           display: "flex",
@@ -98,6 +101,8 @@ export const OrderForm = () => {
           {description}
         </Typography>
       </Box>
+      </Box>
+     
       <Box sx={{ display: "flex", flexDirection: "column", p: 2, gap: 2 }}>
         <TextField
           label="Name"
