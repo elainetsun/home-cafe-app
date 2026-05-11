@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { MENU_ITEMS_URL } from "../constants";
 
 const deleteMenuItemFn = async (id) => {

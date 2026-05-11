@@ -1,5 +1,4 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { useMenuItems } from "../hooks/useMenuItems";
 import { usePendingOrderList } from "../hooks/usePendingOrderList";
 import { Stack, Button, Box, Typography } from "@mui/material";
 import { useUpdateOrderStatus } from "../hooks/useUpdateOrderStatus";
@@ -108,13 +107,8 @@ export const PendingOrdersList = () => {
           </>
         );
       })}
-    </Stack>
+  </Stack>
   );
-};
-
-const getItemName = (id, menuItems = []) => {
-  const item = menuItems.find((item) => item.id === id);
-  return item?.name;
 };
 
 const rowSx = {
