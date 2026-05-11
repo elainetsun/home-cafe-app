@@ -16,7 +16,7 @@ const theme = createTheme({
       contrastText: "#ffffff", // white text
     },
     secondary: {
-      main: "#f5eef2ff", // mauve accent
+      main: "#fdf1f3", // mauve accent
       contrastText: "#ffffff", // white text
     },
   },
