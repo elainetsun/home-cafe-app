@@ -10,6 +10,7 @@ export const sugarMenuOptions = [
   "maple syrup",
   "simple syrup",
   "vanilla syrup",
+  "cinnamon brown sugar syrup",
   "honey",
   "monk fruit",
   "chocolate sauce",

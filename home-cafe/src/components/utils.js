@@ -44,10 +44,13 @@ export const formatSpecialRequests = ({
   isDecaf,
   specialRequests,
   sugarLevel = defaultSugarLevel,
+  name,
+  description
 }) => {
   const decaf = isDecaf ? "DECAF" : "";
   const sugarPercent = sugarLevel !== defaultSugarLevel ? `${sugarLevel}` : "";
-  return [decaf, sugarPercent, specialRequests].filter(Boolean).join(", ");
+  const specialNote = name?.includes("Special") ? description : "";
+  return [decaf, sugarPercent, specialNote, specialRequests].filter(Boolean).join(", ");
 };
 
 export const LoadingSpinner = () => {

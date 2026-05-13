@@ -3,7 +3,7 @@ import { ORDER_ITEM_URL } from "../constants";
 import { formatSpecialRequests } from "../components/utils";
 
 const orderItemsFn = (orderData = {}) => {
-  const { id, customerName, sweetener, isDecaf, sugarLevel, specialRequests } =
+  const { id, customerName, sweetener, isDecaf, sugarLevel, specialRequests, description, name } =
     orderData;
 
   const payload = {
@@ -14,6 +14,8 @@ const orderItemsFn = (orderData = {}) => {
       isDecaf,
       specialRequests,
       sugarLevel,
+      name,
+      description
     }),
   };
   return fetch(ORDER_ITEM_URL, {

@@ -53,6 +53,14 @@ const MenuTabs = ({ menuItems = [] }) => {
     () => allItems.filter((item) => !item?.name?.includes("Iced")),
     [allItems],
   );
+  const specialItems = useMemo(
+    () => allItems.filter((item) => item?.name?.includes("Special")), 
+    [allItems]
+  );
+  const sortedAllItems = useMemo(
+    () => allItems.sort((a,b) => a.id - b.id).filter((item) => !item?.name?.includes("Special")), 
+    [allItems]
+  );
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -61,10 +69,11 @@ const MenuTabs = ({ menuItems = [] }) => {
         <Tab label="Seasonal" />
         <Tab label="Iced" />
         <Tab label="Hot" />
+        <Tab label="Special Orders" />
       </Tabs>
       <TabPanel value={value} index={0}>
         <StyledCardContainer>
-          {allItems?.map((card) => (
+          {sortedAllItems?.map((card) => (
             <DrinkCard {...card} />
           ))}
         </StyledCardContainer>
@@ -86,6 +95,13 @@ const MenuTabs = ({ menuItems = [] }) => {
       <TabPanel value={value} index={3}>
         <StyledCardContainer>
           {hotItems?.map((card) => (
+            <DrinkCard {...card} />
+          ))}
+        </StyledCardContainer>
+      </TabPanel>
+       <TabPanel value={value} index={4}>
+        <StyledCardContainer>
+          {specialItems?.map((card) => (
             <DrinkCard {...card} />
           ))}
         </StyledCardContainer>
